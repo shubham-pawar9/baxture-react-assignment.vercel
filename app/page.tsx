@@ -13,21 +13,30 @@ export default function HomePage() {
   const [userData, setUserData] = useState([]);
   const [followStatus, setFollowStatus] = useState(true);
   const [followList, setFollowList] = useState([]);
+  const [errorShow, setErrorShow] = useState("")
   const fetchData = () => {
     return new Promise(async(resolve, reject)=> {
       try{
-        const url = await fetch("https://jsonplaceholder.typicode.com/users");
-        const data = await url.json();
-        resolve(data);
+        if(errorShow == ""){
+          const url = await fetch("https://jsonplaceholder.typicode.com/users");
+          if (!url.ok) {
+            throw new Error("Failed to fetch data");
+          }
+          const data = await url.json();
+          resolve(data);
+          setErrorShow("")
+        }
       }
       catch(err){
         reject(err);
+        setErrorShow("Failed TO fetch API")
       }
     })
   }
   useEffect(()=> {
     fetchData().then((res)=> setUserData(res));
   },[]);
+  console.log(errorShow)
 const handleFollowClick = (item) => {
   const updatedFollowList = [...followList];
   const index = updatedFollowList.findIndex((followedItem) => followedItem === item);
@@ -50,7 +59,7 @@ const handleFollowClick = (item) => {
     <div className="homePage">
       <div className="cardsDiv">
         {
-          userData && userData.map((item,i)=> {
+          errorShow != "" ? <div>{errorShow}</div> : userData && userData.map((item,i)=> {
             return <div key={i} className="card">
             <div className="headingDiv">
               <div className="nameInitial"><img src = {`https://api.dicebear.com/7.x/initials/svg?seed=${item.name}`} alt={`userInitial`} />JD</div>
@@ -68,6 +77,7 @@ const handleFollowClick = (item) => {
           </div>
           })
         }
+        
         
       </div>
     </div>
