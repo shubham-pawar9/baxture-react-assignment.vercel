@@ -1,0 +1,114 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.homePage {
+    margin: 20px;
+}
+.nameInitial {
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.nameInitial img {
+    height: 100%;
+    width: 100%;
+}
+.cardsDiv {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 14px;
+}
+.card {
+    height: 345px;
+    width: 295px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 18px 0px #8080801f;
+    border: 0.5px solid #c2c2ce63;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+.name {
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 20px;
+}
+.dataDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 1rem;
+    align-self: flex-start;
+}
+.dataDiv a {
+    margin-top: 5px;
+    color: #868e96;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    letter-spacing: 0.4px;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.dataDiv a:hover {
+    text-decoration: underline;
+}
+.headingDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.bottomDiv {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+.followBtn {
+    cursor: pointer;
+    border: none;
+    background-color: #228be6;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 3px;
+    width: 50%;
+    padding: 6px;
+}
+.followBtn.follow {
+    background-color: #fff;
+    color: #000;
+}
+.deleteBtn {
+    cursor: pointer;
+    border: none;
+    color: #228be6;
+    border: 1px solid #228be6;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 3px;
+    width: 50%;
+    padding: 6px;
+}
+.followBtn:hover {
+    background-color: #1c7ed6;
+}
+.followBtn.follow:hover {
+    background-color: initial;
+}

@@ -1,3 +1,76 @@
+"use client"
+import { useEffect, useState } from "react";
+import "../public/App.css";
+import { IconAt } from '@tabler/icons-react';
+import { IconPhoneCall } from '@tabler/icons-react';
+import { IconBrandDribbble } from '@tabler/icons-react';
+import { IconTrash } from '@tabler/icons-react';
+import { IconUserPlus } from '@tabler/icons-react';
+import { IconStar } from '@tabler/icons-react';
+
+
 export default function HomePage() {
-  return <div>Home page</div>;
+  const [userData, setUserData] = useState([]);
+  const [followStatus, setFollowStatus] = useState(true);
+  const [followList, setFollowList] = useState([]);
+  const fetchData = () => {
+    return new Promise(async(resolve, reject)=> {
+      try{
+        const url = await fetch("https://jsonplaceholder.typicode.com/users");
+        const data = await url.json();
+        resolve(data);
+      }
+      catch(err){
+        reject(err);
+      }
+    })
+  }
+  useEffect(()=> {
+    fetchData().then((res)=> setUserData(res));
+  },[]);
+const handleFollowClick = (item) => {
+  const updatedFollowList = [...followList];
+  const index = updatedFollowList.findIndex((followedItem) => followedItem === item);
+  
+  if (index !== -1) {
+    updatedFollowList.splice(index, 1);
+  } else {
+    updatedFollowList.push(item);
+  }
+
+  setFollowStatus(!followStatus); 
+  setFollowList(updatedFollowList);
+};
+
+  const handleDeleteClick = (selectedItem) => {
+    setUserData((prev)=> [...prev].filter(item => item != selectedItem))
+  }
+  return(
+    <>
+    <div className="homePage">
+      <div className="cardsDiv">
+        {
+          userData && userData.map((item,i)=> {
+            return <div key={i} className="card">
+            <div className="headingDiv">
+              <div className="nameInitial"><img src = {`https://api.dicebear.com/7.x/initials/svg?seed=${item.name}`} alt={`userInitial`} />JD</div>
+              <div className="name">{item.name} {followList.includes(item) ? <IconStar width="16" height="16"/> : ''}</div>
+            </div>
+            <div className="dataDiv">
+              <a className="email" href={`mailto:${item.email}`} ><IconAt stroke={2} width="16" height="16"/>{item.email}</a>
+              <a className="phone" href={`tel:${item.phone}`}><IconPhoneCall stroke={2} width="16" height="16"/>{item.phone}</a>
+              <a className="website" href={item.website} target="_blank"><IconBrandDribbble stroke={2} width="16" height="16"/>{item.website}</a>
+            </div>
+            <div className="bottomDiv">
+              <button className={`followBtn ${followList.includes(item) ? 'follow' : ''}`} onClick={()=>handleFollowClick(item)}><IconUserPlus width="16" height="16"/>{followList.includes(item) ? "Unfollow" : "Follow"}</button>
+              <button className="deleteBtn" onClick={()=>handleDeleteClick(item)}><IconTrash width="16" height="16"/> Delete</button>
+            </div>
+          </div>
+          })
+        }
+        
+      </div>
+    </div>
+    </>
+  )
 }
